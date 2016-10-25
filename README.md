@@ -45,7 +45,8 @@ run loopMIDI and click the + button to create a virtual MIDI port that Hairless 
 
 On a Mac, GarageBand is a great option for playing back your MIDI events. On Windows, [Anvil Studio](http://anvilstudio.com/) is a free application
 that we used in the Magical Musical Objects class at the Children's Museum of Bozeman STEAMlab. You'll need to configure
-your synthesizer to play the notes sent from 
+your synthesizer to play the notes sent from your Arduino. In Anvil Studio, you can go View - Synthesizers, MIDI + Audio Devices. Then check 
+the "MIDI Thru enabled for selected MIDI Out device" checkbox.
 
 ## Play music on a digital keyboard (or other synthesizer)
 
