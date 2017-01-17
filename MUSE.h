@@ -270,6 +270,14 @@ class MUSE {
             MIDI.sendNoteOff((int)note, 0, 5);
         }
 
+        void noteOn(int note) {
+            MIDI.sendNoteOn(note, 90, 5);
+        }
+
+        void noteOff(int note) {
+            MIDI.sendNoteOff(note, 0, 5);
+        }
+
         void playNote(MUSENote note, int duration) {
             MIDI.sendNoteOn((int)note, 90, 5);
             delay(duration);
