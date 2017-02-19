@@ -10,13 +10,10 @@
 #endif
 
 #include <Arduino.h>
-#include <MIDI.h>
 
-#ifdef MUSE_USE_SERIAL1
+#include <MIDIUSB.h>
+#include <MIDI.h>
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);
-#else
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial, MIDI);
-#endif
 
 enum MUSENote {
     MUSE_C_1 = 0,
@@ -263,25 +260,32 @@ class MUSE {
         }
 
         void noteOn(MUSENote note) {
-            MIDI.sendNoteOn((int)note, 90, 5);
+            noteOn((int)note);
         }
 
         void noteOff(MUSENote note) {
-            MIDI.sendNoteOff((int)note, 0, 5);
+            noteOff((int)note);
         }
 
         void noteOn(int note) {
+            midiEventPacket_t noteOn = {0x09, 0x90 | 5, note, 90};
+            MidiUSB.sendMIDI(noteOn);
+            MidiUSB.flush();
             MIDI.sendNoteOn(note, 90, 5);
         }
 
         void noteOff(int note) {
+            midiEventPacket_t noteOff = {0x08, 0x80 | 5, note, 90};
+            MidiUSB.sendMIDI(noteOff);
+            MidiUSB.flush();
             MIDI.sendNoteOff(note, 0, 5);
         }
 
         void playNote(MUSENote note, int duration) {
-            MIDI.sendNoteOn((int)note, 90, 5);
+            noteOn(note);
             delay(duration);
-            MIDI.sendNoteOff((int)note, 0, 5);
+
+            noteOff(note);
             delay(10);
         }
 
