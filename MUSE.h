@@ -242,7 +242,7 @@ class MUSE {
 
         void setup() {
             MIDI.begin(MIDI_CHANNEL_OFF);
-            Serial.begin(baud); 
+            Serial.begin(baud);
         }
 
         void loop() {
@@ -269,15 +269,15 @@ class MUSE {
 
         void noteOn(int note, int channel=0, int velocity=90) {
             midiEventPacket_t noteOn = {0x09, 0x90 | channel, note, velocity};
-            //MidiUSB.sendMIDI(noteOn);
-            //MidiUSB.flush();
+            MidiUSB.sendMIDI(noteOn);
+            MidiUSB.flush();
             MIDI.sendNoteOn(note, velocity, channel);
         }
 
         void noteOff(int note, int channel=0, int velocity=90) {
             midiEventPacket_t noteOff = {0x08, 0x80 | channel, note, velocity};
-            //MidiUSB.sendMIDI(noteOff);
-            //MidiUSB.flush();
+            MidiUSB.sendMIDI(noteOff);
+            MidiUSB.flush();
             MIDI.sendNoteOff(note, 0, channel);
         }
 
