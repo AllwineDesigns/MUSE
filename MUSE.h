@@ -259,33 +259,33 @@ class MUSE {
             }
         }
 
-        void noteOn(MUSENote note) {
-            noteOn((int)note);
+        void noteOn(MUSENote note, int channel=0, int velocity=90) {
+            noteOn((int)note, channel, velocity);
         }
 
-        void noteOff(MUSENote note) {
-            noteOff((int)note);
+        void noteOff(MUSENote note, int channel=0, int velocity=90) {
+            noteOff((int)note, channel, velocity);
         }
 
-        void noteOn(int note) {
-            midiEventPacket_t noteOn = {0x09, 0x90 | 5, note, 90};
-            MidiUSB.sendMIDI(noteOn);
-            MidiUSB.flush();
-            MIDI.sendNoteOn(note, 90, 5);
+        void noteOn(int note, int channel=0, int velocity=90) {
+            midiEventPacket_t noteOn = {0x09, 0x90 | channel, note, velocity};
+            //MidiUSB.sendMIDI(noteOn);
+            //MidiUSB.flush();
+            MIDI.sendNoteOn(note, velocity, channel);
         }
 
-        void noteOff(int note) {
-            midiEventPacket_t noteOff = {0x08, 0x80 | 5, note, 90};
-            MidiUSB.sendMIDI(noteOff);
-            MidiUSB.flush();
-            MIDI.sendNoteOff(note, 0, 5);
+        void noteOff(int note, int channel=0, int velocity=90) {
+            midiEventPacket_t noteOff = {0x08, 0x80 | channel, note, velocity};
+            //MidiUSB.sendMIDI(noteOff);
+            //MidiUSB.flush();
+            MIDI.sendNoteOff(note, 0, channel);
         }
 
-        void playNote(MUSENote note, int duration) {
-            noteOn(note);
+        void playNote(MUSENote note, int duration=250, int channel=0, int velocity=90) {
+            noteOn(note, channel, velocity);
             delay(duration);
 
-            noteOff(note);
+            noteOff(note, channel, velocity);
             delay(10);
         }
 
